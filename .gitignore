@@ -6,4 +6,5 @@ db.sqlite3
 __pycache__
 **/**/__pycache__
 media/*
-secrets.py
+app_secrets.py
+uploads/**

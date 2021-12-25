@@ -7,7 +7,7 @@ from .models import Product, Shelf, Storage, ProductSize, ProductLocation
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'article', 'price')
+    list_display = ('id', 'name', 'article', 'price', 'created')
 
 
 @admin.register(Storage)
@@ -27,4 +27,4 @@ class ProductSizeAdmin(admin.ModelAdmin):
 
 @admin.register(ProductLocation)
 class ProductLocationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'storage', 'shelf')
+    list_display = ('product_size', 'shelf')

@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Product(models.Model):
@@ -12,6 +13,16 @@ class Product(models.Model):
     )
     price = models.FloatField(
         verbose_name='Price',
+    )
+    image = models.ImageField(
+        verbose_name='Product Image',
+        upload_to='images/',
+        default=0,
+    )
+
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Created',
     )
 
     def __str__(self):
@@ -30,9 +41,13 @@ class ProductSize(models.Model):
     size = models.IntegerField(
         verbose_name='Size',
     )
+    amount = models.PositiveIntegerField(
+        verbose_name='Amount',
+        default=0,
+    )
 
     def __str__(self):
-        return f'Product {self.product} with size {self.size}'
+        return f'{self.product} with size {self.size} and amount {self.amount}'
 
     class Meta:
         verbose_name = 'Product size'
@@ -50,7 +65,7 @@ class Storage(models.Model):
     )
 
     def __str__(self):
-        return f'Storage {self.name} on {self.location}'
+        return f'{self.name} on {self.location}'
 
     class Meta:
         verbose_name = 'Storage'
@@ -62,7 +77,6 @@ class Shelf(models.Model):
         to='Storage',
         on_delete=models.PROTECT,
         verbose_name='Storage',
-        default=1
 
     )
     number = models.IntegerField(
@@ -78,20 +92,11 @@ class Shelf(models.Model):
 
 
 class ProductLocation(models.Model):
-    product = models.ForeignKey(
-        to='Product',
-        verbose_name='Product',
-        on_delete=models.PROTECT,
-    )
+
     product_size = models.ForeignKey(
         to='ProductSize',
         on_delete=models.PROTECT,
         verbose_name='Product size',
-    )
-    storage = models.ForeignKey(
-        to='Storage',
-        verbose_name='Storage',
-        on_delete=models.PROTECT,
     )
 
     shelf = models.ForeignKey(
@@ -101,7 +106,7 @@ class ProductLocation(models.Model):
     )
 
     def __str__(self):
-        return f'Product {self.product} located on {self.storage} on shelf {self.shelf}'
+        return f'Product located on shelf {self.shelf}'
 
     class Meta:
         verbose_name = 'Product location'
