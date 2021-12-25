@@ -10,7 +10,7 @@ class Product(models.Model):
         verbose_name="Article",
         unique=True,
     )
-    price = models.IntegerField(
+    price = models.FloatField(
         verbose_name='Price',
     )
 
@@ -83,6 +83,11 @@ class ProductLocation(models.Model):
         verbose_name='Product',
         on_delete=models.PROTECT,
     )
+    product_size = models.ForeignKey(
+        to='ProductSize',
+        on_delete=models.PROTECT,
+        verbose_name='Product size',
+    )
     storage = models.ForeignKey(
         to='Storage',
         verbose_name='Storage',
@@ -101,3 +106,4 @@ class ProductLocation(models.Model):
     class Meta:
         verbose_name = 'Product location'
         verbose_name_plural = 'Product locations'
+
